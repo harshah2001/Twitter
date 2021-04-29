@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Login - {{ block.super }}{% endblock %}
+
+{% block content %}
+<style>
+    .user-card {
+                width: 400px;
+                height: 500px;
+                margin-top: auto;
+                margin-bottom: auto;
+                background: #e8e8e8;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 20px;
+    }
+
+    .input-group-text{
+                background:#343a40;
+                color:white;
+    }
+
+    .column{
+        display:grid;
+        grid-auto-flow:column;
+        align-items:center;
+        justify-items:center;
+        width:50%;
+        padding:15px;
+    }
+</style>
+<br>
+<div class="row">
+    <div class="column">
+        <div class="user-card">
+                <div class="d-flex justify-content-center">
+                        <h3 id="form-title">LOGIN</h3>
+                </div>
+                <form method="POST">
+                    <div class="input-group mb-3 justify-content-center">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                        <input placeholder="Enter Username" id="id_username" maxlength="30" name="username" type="text">
+                    </div>
+                    <div class="input-group mb-3 justify-content-center">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input placeholder="Enter Password" id="id_password" name="password" type="password">
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <input type="hidden" name="kind" value="login">
+                        <input type="hidden" name="next" value="/auth/find-friends/">
+                        <input class="btn login_btn" type="submit" value="Login">
+                    </div>
+                </form>
+        </div>
+    </div>
+    <div class="column">
+        <div class="user-card">
+                <div class="d-flex justify-content-center">
+                        <h3 id="form-title">SIGN UP</h3>
+                </div>
+            <form method="POST">
+                <div class="input-group mb-3 justify-content-center">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input placeholder="Enter Username" id="id_username" maxlength="30" name="username" type="text">
+                </div>
+                <div class="input-group mb-3 justify-content-center">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input placeholder="Set Password" id="id_password1" name="password1" type="password">
+                </div>
+                <div class="input-group mb-3 justify-content-center">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input placeholder="Confirm Password" id="id_password2" name="password2" type="password">
+                </div>
+                <div class="d-flex justify-content-center mt-3 login_container">
+                    <input type="hidden" name="kind" value="register">
+                    <input class="btn login_btn" type="submit" value="Sign Up">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Find and Add Friends - {{ block.super }}{% endblock %}
+
+{% block content %}
+<style>
+    .user-card {
+                width: 50%;
+                height: auto;
+                margin: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+                background: #e8e8e8;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 20px;
+    }
+    input{
+    text-align:center;
+    }
+</style>
+<br>
+<div class="user-card">
+    <br>
+    <div class="d-flex justify-content-center">
+        <h3 id="form-title">ADD FRIEND</h3>
+    </div>
+    <div class="d-flex justify-content-center form_container">
+        <form method="GET" action="">
+            {% csrf_token %}
+            <div class="input-group mb-2 justify-content-center">
+                <input placeholder="@Username" type="text" name="q" value="{% if q %}{{ q }}{% endif %}" />
+            </div>
+            <div class="d-flex justify-content-center mt-3 reset_container">
+                <input class="btn login_btn" type="submit" value="Search">
+            </div>
+        </form>
+    </div>
+        <hr>
+            {% if searched %}
+                {% if result %}
+                    <p align="center">Hooray, your friend {{ q }} is on the site!</p>
+                    {% if request.user.is_authenticated %}
+                        {% ifnotequal request.session.username q %}
+                        <div class="d-flex justify-content-center form_container">
+                            <form method="POST" action="{% url 'modify_friend' %}?next={{ request.path }}{% if q %}&amp;q={{ q }}{% endif %}">
+                                <input type="hidden" name="{% if result.friend %}remove{% else %}add{% endif %}-friend" value="{{ q }}" />
+                                <input class="btn login_btn" type="submit" value="{% if result.friend %}Remove{% else %}Add{% endif %} Friend" />
+                            </form>
+                        </div>
+                        {% endifnotequal %}
+                    {% else %}
+                        <div class="d-flex justify-content-center mt-3 reset_container">
+                            <a href="{% url 'login' %}?next={{ request.path }}&amp;q={{ q }}">Login</a>&nbsp;to add {{ q }} as a friend
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <p align="center">There was nobody with username {{ q }}</p>
+                {% endif %}
+            {% else %}
+                <p align="center">Enter a username above to see if they are on the site!</p>
+            {% endif %}
+</div>
+{% endblock %}

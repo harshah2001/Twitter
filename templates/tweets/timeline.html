@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}My Timeline - {{ block.super }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+<style>
+    body,
+    html {
+			background-color: #b2bac1 ;
+		}
+
+    .user-card {
+                width: 80%;
+                height: auto;
+                margin: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+                background: #e8e8e8;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 20px;
+    }
+
+    textarea{
+                outline:none;
+                background:white;
+                width:100%;
+                padding: 10px;
+                border-radius: 20px;
+                resize:none;
+    }
+
+
+</style>
+<br>
+    {% if request.user.is_authenticated %}
+        <h2 align="center">My Timeline</h2>
+<hr>
+        <form method="POST" id="poster" class="form-inline justify-content-center">
+            <div class="form-group mx-sm-3">
+                <textarea cols="93" rows="auto" placeholder="What's on your mind today?" maxlength="140" name="body" id="id_body"></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark mb-2">Post Tweet</button>
+            <div class="clear"></div>
+        </form>
+    {% else %}
+        <h2 align="center">Public Timeline</h2>
+<hr>
+    {% endif %}
+    <ul id="timeline">
+        {% for tweet in tweets %}
+            <div class="user-card">
+                <span class="body">@<a href="{% url 'userline' tweet.username %}" class="username">{{ tweet.username }}</a> : {{ tweet.body|urlize }}</span>
+            </div>
+        &nbsp;
+        {% empty %}
+            <p align="center">There are no tweets yet.  Make sure to post one!</p>
+        {% endfor %}
+        {% if next %}
+            <p align="center" class="more"><a href="?start={{ next }}">---More---</a></p>
+        {% endif %}
+    </ul>
+{% if not request.user.is_authenticated %}
+<p style="font-size:20px" align="center"><a href="{% url 'login' %}">Log in</a>&nbsp;to post a tweet</p>
+    {% endif %}
+{% endblock %}
+
