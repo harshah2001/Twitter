@@ -2,9 +2,9 @@
  Creating a Twitter base using Cassandra DB
 
 HARSH SHAH - 1911081
+Rushil Shah - 1911122
 
-
-SY COMPS B1
+SY COMPS B1,B4
 
 
 RDBMS IA
